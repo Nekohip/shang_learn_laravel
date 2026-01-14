@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//controller路徑，一定要反斜線
+use App\Http\Controllers\CatController;
+Route::get('/cat', [CatController::class, 'cat_index']);
+Route::get('/cat_hello', [CatController::class, 'cat_hello']);
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', function () {
     $name = "shang";
     //dump顯示並繼續
@@ -57,6 +58,6 @@ Route::get('calculator/{num1}/{num2}', function (string $num1, string $num2)
     return view('calculator') -> with("data",$data);
 });
 
-// Route::get('/home0114', function () {
-//     return view('home0114');
-// });
+Route::get('/home0114', function () {
+    return view('home0114');
+});
