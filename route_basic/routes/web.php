@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-//controller路徑，一定要反斜線
+//controller的namespace
 use App\Http\Controllers\CatController;
 Route::get('/cat', [CatController::class, 'cat_index']);
 Route::get('/cat_hello', [CatController::class, 'cat_hello']);
