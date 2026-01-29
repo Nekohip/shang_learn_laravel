@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Student;
+use Illuminate\Support\Facades\DB;
+
+class StudentController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $data = Student::get();
+        // dd($data);
+        return view("student.index")->with("datas", $data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('student.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $input = $request->except('_token');
+        $data = new Student();
+        $data->name = $input["name"];
+        $data->mobile = $input["mobile"];
+        $data->save();
+
+        return redirect()->route("sts.index");
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $data = Student::where('id', $id)->first();
+        return view('student.edit')->with('data', $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $input = $request->except('_token', '_method');
+        $data = Student::where('id', $id)->first();
+        $data->name= $input['name'];
+        $data->mobile= $input['mobile'];
+        $data->save();
+
+        return redirect()->route('sts.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}
