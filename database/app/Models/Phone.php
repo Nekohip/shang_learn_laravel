@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Phone extends Model
 {
-    return $this->hasOne(Phone::class);
+    return $this->belongsTo(Student::class);
 }

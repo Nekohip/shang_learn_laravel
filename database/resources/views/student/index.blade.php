@@ -34,7 +34,15 @@
                 <td>{{$value->name}}</td>
                 <td>{{$value->mobile}}</td>
                 <td>
-                    <a href="{{ route('sts.edit', ['st' => $value->id]) }}" class="btn btn-warning">修改</a>
+                    {{-- <a href="{{ route('sts.edit', ['st' => $value->id]) }}" class="btn btn-warning">修改</a> --}}
+                    <form action="{{ route('sts.destroy', ['st' => $value->id]) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <a href="{{ route('sts.edit', ['st' => $value->id]) }}"
+                            class="btn btn-warning">修改</a>
+                        <button type="submit" class="btn btn-danger">刪除</button>
+                        {{-- <a href="{{ route('sts.destroy', ['st' => $value->id]) }}" class="btn btn-danger">刪除</a> --}}
+                    </form>
                 </td>
             </tr>
         @endforeach

@@ -6,7 +6,7 @@ use App\Http\Controllers\DogController;
 use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route("sts.index");
 });
 
 Route::resource("cars", CarController::class);
