@@ -30,9 +30,10 @@
     <tbody>
         @foreach($datas as $value)
             <tr>
-                <td>{{$value->id}}</td>
-                <td>{{$value->name}}</td>
-                <td>{{$value->mobile}}</td>
+                <td>{{$value->id ?? ''}}</td>
+                <td>{{$value->name ?? ''}}</td>
+                <td>{{$value->mobile ?? ''}}</td>
+                <td>{{$value->phone->name ?? ''}}</td>
                 <td>
                     {{-- <a href="{{ route('sts.edit', ['st' => $value->id]) }}" class="btn btn-warning">修改</a> --}}
                     <form action="{{ route('sts.destroy', ['st' => $value->id]) }}" method="post">

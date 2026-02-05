@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\Phone;
 use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
@@ -13,7 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $data = Student::get();
+        $data = Student::with("phone")->get();
         // dd($data);
         return view("student.index")->with("datas", $data);
     }
@@ -32,10 +33,17 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $input = $request->except('_token');
+        //students
         $data = new Student();
         $data->name = $input["name"];
         $data->mobile = $input["mobile"];
         $data->save();
+
+        //phones
+        $dataPhone = new Phone();
+        $dataPhone->name = $input["phone"];
+        $data->student_id = $data->id;
+        $dataPhone->save();
 
         return redirect()->route("sts.index");
     }
@@ -53,7 +61,7 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        $data = Student::where('id', $id)->first();
+        $data = Student::where('id', $id)->with("phone")->first();
         return view('student.edit')->with('data', $data);
     }
 
@@ -63,10 +71,18 @@ class StudentController extends Controller
     public function update(Request $request, string $id)
     {
         $input = $request->except('_token', '_method');
+        //students
         $data = Student::where('id', $id)->first();
         $data->name= $input['name'];
         $data->mobile= $input['mobile'];
         $data->save();
+        //刪子表
+        Phone::where("student_id", $id)->delete();
+        //phones
+        $dataPhone = new Phone();
+        $dataPhone->name = $input["phone"];
+        $data->student_id = $data->id;
+        $dataPhone->save();
 
         return redirect()->route('sts.index');
     }
@@ -79,6 +95,8 @@ class StudentController extends Controller
         $data = Student::where("id", $id)->first();
         $data->delete();
 
+        //刪子表
+        Phone::where("student_id", $id)->delete();
         return redirect()->route("stdents.index");
     }
 }
